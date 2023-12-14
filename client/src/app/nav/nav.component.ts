@@ -14,7 +14,7 @@ declare var bootstrap: any;
 export class NavComponent implements OnInit {
   model: any = {}
 
-  constructor(public accountService: AccountService, private router: Router, private toastService: ToastService) { }
+  constructor(public accountService: AccountService, private router: Router, private toast: ToastService) { }
 
   ngOnInit(): void {
 
@@ -22,8 +22,7 @@ export class NavComponent implements OnInit {
 
   login() {
     this.accountService.login(this.model).subscribe({
-      next: _ => this.router.navigateByUrl('/members'),
-      error: error => this.toastService.error(JSON.stringify(error.error))
+      next: _ => this.router.navigateByUrl('/members')
     })
   }
 
