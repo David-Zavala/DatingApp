@@ -9,42 +9,47 @@ export class ToastService {
   constructor() { }
 
   error(errorMsj: string = 'Error', errorStatus: string = 'noStatus', displayTime: number = 2000) {
-    // Eliminar comillas si las tiene
+    // Delete "" if it has
     if (errorMsj.startsWith('"') && errorMsj.endsWith('"')) {
       errorMsj = errorMsj.slice(1, -1);
     }
 
-    // Crear Toast
+    // Create Toast container
     const toastContainer = document.createElement('div');
-    if (errorStatus == 'noStatus'){
-      toastContainer.innerHTML = `
-        <div border border-2 class="toast-container positions-fixed bottom-0 end-0 p-3 bg-danger text-light p-3 rounded-3" style="margin-right:20px;margin-bottom:100px">
-          <div class="toast-body text-light">
-            ${errorMsj}
-          </div>
-        </div>
-      `;
+    toastContainer.classList.add('toast-container', 'position-fixed', 'bottom-0', 'end-0', 'p-3', 'bg-danger', 'text-light', 'p-3', 'rounded-3');
+    toastContainer.style.marginRight = '5%';
+    toastContainer.style.marginBottom = '5%';
+    toastContainer.style.marginTop = '10px';
+    
+    // Append title if it has one
+    if (errorStatus != 'noStatus'){
+      const toastTitle = document.createElement('div');
+      toastTitle.classList.add('toast-title', 'text-light', 'fw-bold', 'text-center');
+      toastTitle.innerText = errorStatus;
+      toastContainer.appendChild(toastTitle);
     }
-    else{
-      toastContainer.innerHTML = `
-        <div border border-2 class="toast-container positions-fixed bottom-0 end-0 p-3 bg-danger text-light p-3 rounded-3" style="margin-right:20px;margin-bottom:100px">
-          <div class="toast-title text-light fw-bold" style="display: block;">
-            <center>${errorStatus}<center>
-          </div>
-          <div class="toast-body text-light" style="display: block;">
-            ${errorMsj}
-          </div>
-        </div>
-      `;
-    }
-    // Implantar y mostrar Toast
+
+    // Append error message
+    const toastBody = document.createElement('div');
+    toastBody.classList.add('toast-body', 'text-light');
+    toastBody.innerText = errorMsj;
+    toastContainer.appendChild(toastBody);
+
+    // Append Toast to DOM
     document.body.appendChild(toastContainer);
   
+    // Create a Bootstrap Toast
     const bsToast = new bootstrap.Toast(toastContainer, {
       autohide: true,
-      delay: displayTime // Duración en milisegundos
+      delay: displayTime
     });
   
+    // Show Toast
     bsToast.show();
+
+    // Delete Toast after time elapsed
+    bsToast._element.addEventListener('hidden.bs.toast', function () {
+      document.body.removeChild(toastContainer);
+    });
   }
 }
