@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { ToastService } from '../_services/toast.service';
-declare var bootstrap: any;
 
 @Component({
   selector: 'app-nav',
