@@ -18,8 +18,8 @@
             </li>
         </ul>
 
-        <div class="dropdown" *ngIf="(accountService.currentUser$| async) as user">
-            <img src="{{user.photoUrl || '.assets/user.png'}}" alt="user photo">
+        <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user">
+            <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
             <a class="btn dropdown-toggle text-light ms-3" data-bs-toggle="dropdown">
                 Welcome {{ user.username | titlecase }}
             </a>
