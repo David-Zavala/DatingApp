@@ -11,18 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [Authorize]
-public class UsersController : BaseApiController
+public class UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService) : BaseApiController
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-    private readonly IPhotoService _photoService;
-
-    public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
-    {
-        _photoService = photoService;
-        _userRepository = userRepository;
-        _mapper = mapper;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
+    private readonly IPhotoService _photoService = photoService;
 
     [HttpGet] // /api/users
     public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)

@@ -11,17 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class AccountController : BaseApiController
+    public class AccountController(DataContext context, ITokenService tokenService, IMapper mapper) : BaseApiController
     {
-        private readonly DataContext _context;
-        private readonly ITokenService _tokenService;
-        private readonly IMapper _mapper;
-        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
-        {
-            _tokenService = tokenService;
-            _context = context;
-            _mapper = mapper;
-        }
+        private readonly DataContext _context = context;
+        private readonly ITokenService _tokenService = tokenService;
+        private readonly IMapper _mapper = mapper;
 
         [HttpPost("register")] // Endpoint:   api/account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)

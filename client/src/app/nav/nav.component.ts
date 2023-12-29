@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
-import { Observable, of } from 'rxjs';
-import { User } from '../_models/user';
 import { Router } from '@angular/router';
-import { ToastService } from '../_services/toast.service';
+import { MembersService } from '../_services/members.service';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +11,7 @@ import { ToastService } from '../_services/toast.service';
 export class NavComponent implements OnInit {
   model: any = {}
 
-  constructor(public accountService: AccountService, private router: Router, private toast: ToastService) { }
+  constructor(public accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
 

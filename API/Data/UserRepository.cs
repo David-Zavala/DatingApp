@@ -8,16 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
     {
-        private readonly DataContext _context;
-        private readonly IMapper _mapper;
-        public UserRepository(DataContext context, IMapper mapper)
-        {
-            _mapper = mapper;
-            _context = context;
-            
-        }
+        private readonly DataContext _context = context;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
@@ -34,7 +28,7 @@ namespace API.Data
             query = userParams.OrderBy switch
             {
                 "created" => query.OrderByDescending(u => u.Created),
-                _ => query.OrderByDescending(u => u.LasActive)
+                _ => query.OrderByDescending(u => u.LastActive)
             };
 
             return await PagedList<MemberDto>.CreateAsync(query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider), userParams.PageNumber, userParams.PageSize);
