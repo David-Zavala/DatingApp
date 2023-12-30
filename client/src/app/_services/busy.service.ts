@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,22 +8,24 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class BusyService {
   busyRequestCount = 0;
 
-  constructor(private spinnerService: NgxSpinnerService) { }
+  constructor(private spinnerService: NgxSpinnerService, private toast: ToastService) { }
 
   busy() {
     this.busyRequestCount++;
-    this.spinnerService.show(undefined, {
-      type: 'line-scale-party',
-      bdColor: 'rgba(255,255,255,0)',
-      color: '#333333'
-    })
+    this.toast.loading();
+    // this.spinnerService.show(undefined, {
+    //   type: 'line-scale-party',
+    //   bdColor: 'rgba(255,255,255,0)',
+    //   color: '#333333'
+    // })
   }
 
   idle() {
     this.busyRequestCount--;
     if (this.busyRequestCount <= 0) {
       this.busyRequestCount = 0;
-      this.spinnerService.hide();
+      this.toast.endloading();
+      // this.spinnerService.hide();
     }
   }
 }

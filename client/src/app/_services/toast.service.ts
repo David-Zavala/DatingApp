@@ -5,7 +5,7 @@ declare var bootstrap: any;
   providedIn: 'root'
 })
 export class ToastService {
-
+  
   constructor() { }
 
   error(errorMsj: string = 'Error', errorStatus: string = 'noStatus', displayTime: number = 2000) {
@@ -20,9 +20,9 @@ export class ToastService {
     toastContainer.style.marginRight = '5%';
     toastContainer.style.marginBottom = '5%';
     toastContainer.style.marginTop = '10px';
-    
+
     // Append title if it has one
-    if (errorStatus != 'noStatus'){
+    if (errorStatus != 'noStatus') {
       const toastTitle = document.createElement('div');
       toastTitle.classList.add('toast-title', 'text-light', 'fw-bold', 'text-center');
       toastTitle.innerText = errorStatus;
@@ -37,13 +37,13 @@ export class ToastService {
 
     // Append Toast to DOM
     document.body.appendChild(toastContainer);
-  
+
     // Create a Bootstrap Toast
     const bsToast = new bootstrap.Toast(toastContainer, {
       autohide: true,
       delay: displayTime
     });
-  
+
     // Show Toast
     bsToast.show();
 
@@ -65,9 +65,9 @@ export class ToastService {
     toastContainer.style.marginRight = '5%';
     toastContainer.style.marginBottom = '5%';
     toastContainer.style.marginTop = '10px';
-    
+
     // Append title if it has one
-    if (errorStatus != 'noStatus'){
+    if (errorStatus != 'noStatus') {
       const toastTitle = document.createElement('div');
       toastTitle.classList.add('toast-title', 'text-light', 'fw-bold', 'text-center');
       toastTitle.innerText = errorStatus;
@@ -82,19 +82,70 @@ export class ToastService {
 
     // Append Toast to DOM
     document.body.appendChild(toastContainer);
-  
+
     // Create a Bootstrap Toast
     const bsToast = new bootstrap.Toast(toastContainer, {
       autohide: true,
       delay: displayTime
     });
-  
+
     // Show Toast
     bsToast.show();
 
     // Delete Toast after time elapsed
     bsToast._element.addEventListener('hidden.bs.toast', function () {
       document.body.removeChild(toastContainer);
+    });
+  }
+
+  bsToastLoading: any;
+
+  loading() {
+    // Create Toast container
+    const toastContainer = document.createElement('div');
+    toastContainer.classList.add(
+      'toast-container',
+      'position-fixed',
+      'top-50',
+      'start-50',
+      'translate-middle',
+      'bg-info',
+      'text-light',
+      'p-3',
+      'rounded-5',
+      'd-flex',
+      'align-items-center',
+      'justify-content-center');
+    toastContainer.style.width = '400px';
+    toastContainer.style.height = '200px';
+
+    // Append loading message
+    const toastBody = document.createElement('div');
+    toastBody.classList.add('toast-body', 'text-light', 'text-center');
+    toastBody.innerText = "Loading...";
+    toastBody.style.fontSize = '60px';
+    toastContainer.appendChild(toastBody);
+
+
+    // Append Toast to DOM
+    document.body.appendChild(toastContainer);
+
+    // Create a Bootstrap Toast
+    this.bsToastLoading = new bootstrap.Toast(toastContainer, {
+      autohide: true,
+      delay: 2000,
+    });
+
+    // Show Toast
+    this.bsToastLoading.show();
+  }
+
+  endloading() {
+    // Hide boostrap toast
+    this.bsToastLoading.hide();
+    // Delete Toast after time elapsed
+    this.bsToastLoading._element.addEventListener('hidden.bs.toast', () => {
+      document.body.removeChild(this.bsToastLoading._element);
     });
   }
 }
