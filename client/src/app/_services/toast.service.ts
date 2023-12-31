@@ -98,7 +98,7 @@ export class ToastService {
     });
   }
 
-  bsToastLoading: any;
+  private bsToastLoading: any;
 
   loading() {
     // Create Toast container
