@@ -74,10 +74,74 @@ export class ToastService {
       toastContainer.appendChild(toastTitle);
     }
 
-    // Append error message
+    // Append success message
     const toastBody = document.createElement('div');
     toastBody.classList.add('toast-body', 'text-light');
     toastBody.innerText = errorMsj;
+    toastContainer.appendChild(toastBody);
+
+    // Append Toast to DOM
+    document.body.appendChild(toastContainer);
+
+    // Create a Bootstrap Toast
+    const bsToast = new bootstrap.Toast(toastContainer, {
+      autohide: true,
+      delay: displayTime
+    });
+
+    // Show Toast
+    bsToast.show();
+
+    // Delete Toast after time elapsed
+    bsToast._element.addEventListener('hidden.bs.toast', function () {
+      document.body.removeChild(toastContainer);
+    });
+  }
+
+  info(msj: string = 'Info text', displayTime: number = 2000) {
+    // Create Toast container
+    const toastContainer = document.createElement('div');
+    toastContainer.classList.add('toast-container', 'position-fixed', 'bottom-0', 'end-0', 'p-3', 'bg-info', 'text-light', 'p-3', 'rounded-3');
+    toastContainer.style.marginRight = '5%';
+    toastContainer.style.marginBottom = '5%';
+    toastContainer.style.marginTop = '10px';
+
+    // Append info message
+    const toastBody = document.createElement('div');
+    toastBody.classList.add('toast-body', 'text-light');
+    toastBody.innerText = msj;
+    toastContainer.appendChild(toastBody);
+
+    // Append Toast to DOM
+    document.body.appendChild(toastContainer);
+
+    // Create a Bootstrap Toast
+    const bsToast = new bootstrap.Toast(toastContainer, {
+      autohide: true,
+      delay: displayTime
+    });
+
+    // Show Toast
+    bsToast.show();
+
+    // Delete Toast after time elapsed
+    bsToast._element.addEventListener('hidden.bs.toast', function () {
+      document.body.removeChild(toastContainer);
+    });
+  }
+
+  warning(msj: string = 'Warning text', displayTime: number = 2000) {
+    // Create Toast container
+    const toastContainer = document.createElement('div');
+    toastContainer.classList.add('toast-container', 'position-fixed', 'bottom-0', 'end-0', 'p-3', 'bg-danger', 'text-light', 'p-3', 'rounded-3');
+    toastContainer.style.marginRight = '5%';
+    toastContainer.style.marginBottom = '5%';
+    toastContainer.style.marginTop = '10px';
+
+    // Append warning message
+    const toastBody = document.createElement('div');
+    toastBody.classList.add('toast-body', 'text-light');
+    toastBody.innerText = msj;
     toastContainer.appendChild(toastBody);
 
     // Append Toast to DOM
